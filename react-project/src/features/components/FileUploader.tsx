@@ -34,7 +34,14 @@ export const FileUploader = (): React.JSX.Element => {
   return (
     <div className="FileUploader">
       <div className="App-form">
-        <input name="file" type="file" accept="image/*" onChange={handleChange} ref={fileInputRef} />
+        <label
+          htmlFor="fileUpload"
+          className="customFileLabel"
+          {...(file ? {title: `ファイル名：${file.name}`} : {})}
+        >
+          {file ? `ファイル名：${file.name}` : 'ファイルを選択してください'}
+        </label>
+        <input id="fileUpload" name="file" type="file" accept="image/*" onChange={handleChange} ref={fileInputRef} style={{ display: 'none'}} />
         <input type="button" disabled={!file} value="送信" />
         {previewUrl && (
           <div className="ImagePreview">
