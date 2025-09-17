@@ -1,4 +1,5 @@
 import { useState } from "react";
+import './FileUploader.css';
 
 export const FileUploader = (): React.JSX.Element => {
   const [file, setFile] = useState<File | null>(null);
