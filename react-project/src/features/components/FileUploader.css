@@ -20,6 +20,49 @@ body {
   width: 300px;
 }
 
+.ImagePreview {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.ImagePreview img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.ImagePreview {
+  position: relative;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.ImagePreview img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.ResetButton {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: #444;
+  color: #fff;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.ResetButton:hover {
+  background-color: #666;
+}
+
 .App-form {
   display: flex;
   flex-direction: column;
