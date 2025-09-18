@@ -4,36 +4,32 @@ import { ImageDisplay } from "./ImageDisplay";
 import './ImageUploadPage.css';
 
 export const ImageUploadPage = (): React.JSX.Element => {
-  const [submittedFile, setSubmittedFile] = useState<File | null>(null);
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [submittedFiles, setSubmittedFiles] = useState<File[]>([]);
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
 
-  // Fileが更新されたらURLを生成し、前のURLを破棄
   useEffect(() => {
-    if (!submittedFile) {
-      setImageUrl(null);
-      return;
-    }
-
-    const objectUrl = URL.createObjectURL(submittedFile);
-    setImageUrl(objectUrl);
+    const urls = submittedFiles.map(file => URL.createObjectURL(file));
+    setImageUrls(urls);
 
     return () => {
-      URL.revokeObjectURL(objectUrl);
+      urls.forEach(url => URL.revokeObjectURL(url));
     };
-  }, [submittedFile]);
+  }, [submittedFiles]);
 
   const handleSubmit = (file: File | null) => {
-    setSubmittedFile(file);
+    if(file) {
+      setSubmittedFiles(prev => [...prev, file]);
+    }
   };
 
-  const handleClearImage = () => {
-    setSubmittedFile(null);
-    setImageUrl(null);
+  const handleClearImages = () => {
+    setSubmittedFiles([]);
+    setImageUrls([]);
   }
 
   return (
     <div className="ImageUploadPage">
-      <ImageDisplay imageUrl={imageUrl} onClear={handleClearImage} />
+      <ImageDisplay imageUrls={imageUrls} onClear={handleClearImages} />
       <FileUploader onSubmit={handleSubmit}/>
     </div>
   );
