@@ -1,7 +1,11 @@
 import { useRef, useState } from "react";
 import './FileUploader.css';
 
-export const FileUploader = (): React.JSX.Element => {
+interface FileUploaderProps {
+  onSubmit: (imaageUrl:  string | null) => void;
+}
+
+export const FileUploader = ({ onSubmit }: FileUploaderProps): React.JSX.Element => {
   const [file, setFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -31,6 +35,12 @@ export const FileUploader = (): React.JSX.Element => {
     }
   }
 
+  const handleSubmit = () => {
+    if (previewUrl) {
+      onSubmit(previewUrl);
+    }
+  };
+
   return (
     <div className="FileUploader">
       <div className="App-form">
@@ -42,7 +52,7 @@ export const FileUploader = (): React.JSX.Element => {
           {file ? `ファイル名：${file.name}` : 'ファイルを選択してください'}
         </label>
         <input id="fileUpload" name="file" type="file" accept="image/*" onChange={handleChange} ref={fileInputRef} style={{ display: 'none'}} />
-        <input type="button" disabled={!file} value="送信" />
+        <input type="button" disabled={!file} value="送信" onClick={handleSubmit}/>
         {previewUrl && (
           <div className="ImagePreview">
             <img src={previewUrl} alt="プレビュー" />
