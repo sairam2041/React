@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import './FileUploader.css';
 
 interface FileUploaderProps {
-  onSubmit: (imaageUrl:  string | null) => void;
+  onSubmit: (file: File | null) => void;
 }
 
 export const FileUploader = ({ onSubmit }: FileUploaderProps): React.JSX.Element => {
@@ -27,8 +27,6 @@ export const FileUploader = ({ onSubmit }: FileUploaderProps): React.JSX.Element
       URL.revokeObjectURL(previewUrl);
       setPreviewUrl(null);
       setFile(null);
-
-      // ファイル名の表示を消す
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }
@@ -36,8 +34,9 @@ export const FileUploader = ({ onSubmit }: FileUploaderProps): React.JSX.Element
   }
 
   const handleSubmit = () => {
-    if (previewUrl) {
-      onSubmit(previewUrl);
+    if (file) {
+      onSubmit(file); // Fileオブジェクトを親に渡す
+      handleResetPreview(); // 自分のプレビューは初期化
     }
   };
 
