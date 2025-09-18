@@ -26,10 +26,15 @@ export const ImageUploadPage = (): React.JSX.Element => {
     setSubmittedFile(file);
   };
 
+  const handleClearImage = () => {
+    setSubmittedFile(null);
+    setImageUrl(null);
+  }
+
   return (
     <div className="ImageUploadPage">
-      <ImageDisplay imageUrl={imageUrl} />
-      <FileUploader onSubmit={handleSubmit} />
+      <ImageDisplay imageUrl={imageUrl} onClear={handleClearImage} />
+      <FileUploader onSubmit={handleSubmit}/>
     </div>
   );
 };

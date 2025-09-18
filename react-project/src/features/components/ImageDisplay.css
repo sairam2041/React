@@ -1,0 +1,26 @@
+.ImageDisplay {
+  position: relative;
+  width: fit-content;
+}
+
+.ImageWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.ClearButton {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  background-color: #444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.ClearButton:hover {
+  background-color: #666;
+}
