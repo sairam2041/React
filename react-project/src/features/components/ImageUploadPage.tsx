@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FileUploader } from "./FileUploader";
 import { ImageDisplay } from "./ImageDisplay";
-import './ImageUploadPage.css';
+import '../styles/ImageUploadPage.css';
 
 export const ImageUploadPage = (): React.JSX.Element => {
   const [submittedFiles, setSubmittedFiles] = useState<File[]>([]);

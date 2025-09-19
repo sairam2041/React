@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import './FileUploader.css';
+import '../styles/FileUploader.css';
 
 interface FileUploaderProps {
   onSubmit: (file: File | null) => void;

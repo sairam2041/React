@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import './ImageDisplay.css';
+import '../styles/ImageDisplay.css';
 
 interface ImageDisplayProps {
     imageUrls: string[];
