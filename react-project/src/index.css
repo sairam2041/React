@@ -13,6 +13,17 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #242424; /* 暗めの背景色 */
+}
+
 a {
   font-weight: 500;
   color: #646cff;
