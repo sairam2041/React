@@ -1,5 +1,7 @@
 .ImageUploadPage {
   display: flex;
-  gap: 20px;
-  align-items: flex-start;
+  flex-direction: column; /* 縦並びにする */
+  align-items: center;    /* 子要素を横方向中央に揃える */
+  gap: 20px;              /* コンポーネント間の余白（任意） */
+  padding: 40px;
 }
