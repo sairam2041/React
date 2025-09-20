@@ -22,15 +22,10 @@ export const ImageDisplay = ({ imageUrls, onClear }: ImageDisplayProps): React.J
             img.onload = () => {
                 const naturalHeight = img.naturalHeight;
                 const naturalWidth = img.naturalWidth;
+                const scale = threshold / naturalHeight;
 
-                if (naturalHeight > threshold) {
-                    const scale = threshold / naturalHeight;
-                    img.style.height = `${threshold}px`;
-                    img.style.width = `${naturalWidth * scale}px`;
-                } else {
-                    img.style.height = `${naturalHeight}px`;
-                    img.style.width = `${naturalWidth}px`;
-                }
+                img.style.height = `${threshold}px`;
+                img.style.width = `${naturalWidth * scale}px`;
             };
         });
     }, [imageUrls]);
