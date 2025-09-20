@@ -1,0 +1,25 @@
+.kanban-container {
+  width: 300px;
+  padding: 20px;
+  background-color: #eee;
+  border-radius: 8px;
+  min-height: 400px;
+}
+
+.kanban-item {
+  padding: 12px;
+  margin-bottom: 8px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: grab;
+  transition: box-shadow 0.2s ease;
+}
+
+.kanban-item:active {
+  cursor: grabbing;
+}
+
+.kanban-item:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
