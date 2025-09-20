@@ -1,52 +1,90 @@
 import React, { useState } from 'react';
 import '../styles/kanban.css';
 
-type KanbanItem = {
+type Task = {
     id: string;
     content: string;
 };
 
-const initialItems: KanbanItem[] = [
-    { id: '1', content: 'タスクA' },
-    { id: '2', content: 'タスクB' },
-    { id: '3', content: 'タスクC' },
-];
+type ColumnKey = 'todo' | 'inProgress' | 'review' | 'done';
+
+type Columns = {
+    [key in ColumnKey]: Task[];
+}
+
+const initialColumns: Columns = {
+  todo: [{ id: '1', content: '仕様作成' }],
+  inProgress: [{ id: '2', content: 'UI設計' }],
+  review: [{ id: '3', content: 'コードレビュー' }],
+  done: [{ id: '4', content: 'リリース完了' }],
+};
 
 const SimpleKanban: React.FC = () => {
-  const [items, setItems] = useState<KanbanItem[]>(initialItems);
+  const [columns, setColumns] = useState<Columns>(initialColumns);
 
-  const handleDragStart = (e: React.DragEvent<HTMLDivElement>, index: number) => {
-    e.dataTransfer.setData('dragIndex', index.toString());
+  const handleDragStart = (
+    e: React.DragEvent<HTMLDivElement>, 
+    fromColumn: ColumnKey,
+    index: number
+  ) => {
+    e.dataTransfer.setData('fromColumn', fromColumn);
+    e.dataTransfer.setData('taskIndex', index.toString());
   };
 
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>, dropIndex: number) => {
-    const dragIndex = parseInt(e.dataTransfer.getData('dragIndex'), 10);
-    if (isNaN(dragIndex)) return;
+   const handleDrop = (
+    e: React.DragEvent<HTMLDivElement>,
+    toColumn: ColumnKey
+   ) => {
+    e.preventDefault();
+    const fromColumn = e.dataTransfer.getData('fromColumn') as ColumnKey;
+    const taskIndex = parseInt(e.dataTransfer.getData('taskIndex'), 10);
+    if (!fromColumn || isNaN(taskIndex)) return;
 
-    const newItems = [...items];
-    const [draggedItem] = newItems.splice(dragIndex, 1);
-    newItems.splice(dropIndex, 0, draggedItem);
-    setItems(newItems);
+    const task = columns[fromColumn][taskIndex];
+    const newColumns = { ...columns };
+    newColumns[fromColumn] = [...newColumns[fromColumn]];
+    newColumns[toColumn] = [...newColumns[toColumn], task];
+    newColumns[fromColumn].splice(taskIndex, 1);
+
+    setColumns(newColumns);
   };
 
   const allowDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
   };
 
+  const columnTitles: { [key in ColumnKey]: string } = {
+    todo: 'To Do',
+    inProgress: 'In Progress',
+    review: 'Review',
+    done: 'Done',
+  };
+
   return (
-    <div className="kanban-container">
-      {items.map((item, index) => (
-        <div
-          key={item.id}
-          className="kanban-item"
-          draggable
-          onDragStart={(e) => handleDragStart(e, index)}
-          onDragOver={allowDrop}
-          onDrop={(e) => handleDrop(e, index)}
-        >
-          {item.content}
-        </div>
-      ))}
+    <div className="kanban-board">
+      {Object.keys(columns).map((key) => {
+        const columnKey = key as ColumnKey;
+        return (
+          <div
+            key={columnKey}
+            className="kanban-column"
+            onDragOver={allowDrop}
+            onDrop={(e) => handleDrop(e, columnKey)}
+          >
+            <h2 className="kanban-title">{columnTitles[columnKey]}</h2>
+            {columns[columnKey].map((task, index) => (
+              <div
+                key={task.id}
+                className="kanban-task"
+                draggable
+                onDragStart={(e) => handleDragStart(e, columnKey, index)}
+              >
+                {task.content}
+              </div>
+            ))}
+          </div>
+        );
+      })}
     </div>
   );
 };
