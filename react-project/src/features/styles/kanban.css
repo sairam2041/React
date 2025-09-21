@@ -1,6 +1,23 @@
+.kanban-container {
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+}
+
+.kanban-header {
+  padding: 12px 16px;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #ddd;
+}
+
+.kanban-body {
+  flex: 1;
+  overflow-y: auto;
+}
+
 .kanban-board {
   display: flex;
-  height: 90vh;
+  height: 100%;
 }
 
 .kanban-column {
@@ -21,4 +38,18 @@
   margin-bottom: 12px;
   text-align: center;
   color: #333;
+}
+
+.add-button {
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-button:hover {
+  background-color: #0056b3;
 }

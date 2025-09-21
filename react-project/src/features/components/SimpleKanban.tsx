@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import '../styles/kanban.css';
 import KanbanCard from './KanbanCard';
+import AddCardModal from './AddCardModal';
+import '../styles/kanban.css';
 
 type Task = {
     id: string;
@@ -22,6 +23,18 @@ const initialColumns: Columns = {
 
 const SimpleKanban: React.FC = () => {
   const [columns, setColumns] = useState<Columns>(initialColumns);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleAddCard = (content: string) => {
+    const newCard: Task = {
+      id: Date.now().toString(),
+      content,
+    };
+    setColumns((prev) => ({
+      ...prev,
+      todo: [...prev.todo, newCard],
+    }));
+  }
 
   const handleDragStart = (
     e: React.DragEvent<HTMLDivElement>, 
@@ -62,27 +75,44 @@ const SimpleKanban: React.FC = () => {
   };
 
   return (
-    <div className="kanban-board">
-      {Object.keys(columns).map((key) => {
-        const columnKey = key as ColumnKey;
-        return (
-          <div
-            key={columnKey}
-            className="kanban-column"
-            onDragOver={allowDrop}
-            onDrop={(e) => handleDrop(e, columnKey)}
-          >
-            <h2 className="kanban-title">{columnTitles[columnKey]}</h2>
-            {columns[columnKey].map((task, index) => (
-              <KanbanCard
-                key={task.id}
-                content={task.content}
-                onDragStart={(e) => handleDragStart(e, columnKey, index)}
-              />
-            ))}
-          </div>
-        );
-      })}
+    <div className='kanban-container'>
+      <header className='kanban-header'>
+        <button className='add-button' onClick={() => setShowModal(true)}>
+          + タスク追加
+        </button>
+      </header>
+
+      <main className='kanban-body'>
+        <div className="kanban-board">
+          {Object.keys(columns).map((key) => {
+            const columnKey = key as ColumnKey;
+            return (
+              <div
+                key={columnKey}
+                className="kanban-column"
+                onDragOver={allowDrop}
+                onDrop={(e) => handleDrop(e, columnKey)}
+              >
+                <h2 className="kanban-title">{columnTitles[columnKey]}</h2>
+                {columns[columnKey].map((task, index) => (
+                  <KanbanCard
+                    key={task.id}
+                    content={task.content}
+                    onDragStart={(e) => handleDragStart(e, columnKey, index)}
+                  />
+                ))}
+              </div>
+            );
+          })}
+        </div>
+      </main>
+
+      {showModal && (
+        <AddCardModal 
+          onAdd={handleAddCard}
+          onClose={() => setShowModal(false)}
+        />
+      )}
     </div>
   );
 };
