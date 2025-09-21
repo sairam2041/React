@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import '../styles/DrawingCanvas.css';
+import '../styles/drawing-canvas.css';
 
 const DrawingCanvas: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);

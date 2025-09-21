@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/addCardModal.css';
+import '../styles/add-card-modal.css';
 
 type AddCardModalProps = {
     onAdd: (content: string) => void;

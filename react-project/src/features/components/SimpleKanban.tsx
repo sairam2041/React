@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import KanbanCard from './KanbanCard';
 import AddCardModal from './AddCardModal';
-import '../styles/kanban.css';
 import EditCardModal from './EditCardModal';
+import '../styles/kanban.css';
 
 type Task = {
     id: string;

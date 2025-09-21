@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/edit-modal.css';
+import '../styles/edit-card-modal.css';
 
 type EditCardModalProps = {
     initialContent: string;

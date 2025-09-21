@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/KanbanCard.css'
+import '../styles/kanban-card.css'
 
 type KanbanCardProps = {
     content: string;
