@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import KanbanCard from './KanbanCard';
 import AddCardModal from './AddCardModal';
 import '../styles/kanban.css';
+import EditCardModal from './EditCardModal';
 
 type Task = {
     id: string;
@@ -24,6 +25,7 @@ const initialColumns: Columns = {
 const SimpleKanban: React.FC = () => {
   const [columns, setColumns] = useState<Columns>(initialColumns);
   const [showModal, setShowModal] = useState(false);
+  const [editingTask, setEditingTask] = useState<{ column: ColumnKey; index: number } | null>(null);
 
   const handleAddCard = (content: string) => {
     const newCard: Task = {
@@ -34,7 +36,16 @@ const SimpleKanban: React.FC = () => {
       ...prev,
       todo: [...prev.todo, newCard],
     }));
-  }
+  };
+
+  const handleEditCard = (newContent: string) => {
+    if (!editingTask) return;
+    const { column, index } = editingTask;
+    const updatedColumns = { ...columns };
+    updatedColumns[column][index].content = newContent;
+    setColumns(updatedColumns);
+    setEditingTask(null);
+  };
 
   const handleDragStart = (
     e: React.DragEvent<HTMLDivElement>, 
@@ -99,6 +110,7 @@ const SimpleKanban: React.FC = () => {
                     key={task.id}
                     content={task.content}
                     onDragStart={(e) => handleDragStart(e, columnKey, index)}
+                    onDoubleClick={() => setEditingTask({ column: columnKey, index})}
                   />
                 ))}
               </div>
@@ -111,6 +123,14 @@ const SimpleKanban: React.FC = () => {
         <AddCardModal 
           onAdd={handleAddCard}
           onClose={() => setShowModal(false)}
+        />
+      )}
+
+      {editingTask && (
+        <EditCardModal
+          initialContent={columns[editingTask.column][editingTask.index].content}
+          onSave={handleEditCard}
+          onClose={() => setEditingTask(null)}
         />
       )}
     </div>

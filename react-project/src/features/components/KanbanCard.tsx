@@ -4,16 +4,18 @@ import '../styles/KanbanCard.css'
 type KanbanCardProps = {
     content: string;
     onDragStart: (e: React.DragEvent<HTMLDivElement>) => void;
+    onDoubleClick: () => void;
 };
 
-const KanbanCard: React.FC<KanbanCardProps> = ({ content, onDragStart }) => {
+const KanbanCard: React.FC<KanbanCardProps> = ({ content, onDragStart, onDoubleClick }) => {
     return (
         <div 
-        className='Kanban-task'
-        draggable
-        onDragStart={onDragStart}
+          className='Kanban-task'
+          draggable
+          onDragStart={onDragStart}
+          onDoubleClick={onDoubleClick}
         >
-            {content}
+          {content}
         </div>
     );
 };

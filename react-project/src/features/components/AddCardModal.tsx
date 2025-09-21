@@ -19,7 +19,6 @@ const AddCardModal: React.FC<AddCardModalProps> = ({ onAdd, onClose }) => {
 
     return (
         <div className='modal-overlay'>
-
             <div className='modal'>
                 <h3>新しいタスクを追加</h3>
                 <textarea
