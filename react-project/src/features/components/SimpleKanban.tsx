@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/kanban.css';
+import KanbanCard from './KanbanCard';
 
 type Task = {
     id: string;
@@ -73,14 +74,11 @@ const SimpleKanban: React.FC = () => {
           >
             <h2 className="kanban-title">{columnTitles[columnKey]}</h2>
             {columns[columnKey].map((task, index) => (
-              <div
+              <KanbanCard
                 key={task.id}
-                className="kanban-task"
-                draggable
+                content={task.content}
                 onDragStart={(e) => handleDragStart(e, columnKey, index)}
-              >
-                {task.content}
-              </div>
+              />
             ))}
           </div>
         );
