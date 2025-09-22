@@ -1,10 +1,13 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import DrawingCanvas from './features/components/DrawingCanvas.tsx'
+import { StrictMode } from 'react';
+import ReactDOM from 'react-dom/client';
+import AppRoutes from './AppRoutes';
+import './index.css';
 
-createRoot(document.getElementById('root')!).render(
+const rootElement = document.getElementById('root');
+if (!rootElement) throw new Error('Root element not found');
+
+ReactDOM.createRoot(rootElement).render(
   <StrictMode>
-    <DrawingCanvas />
+    <AppRoutes />
   </StrictMode>
-)
+);
