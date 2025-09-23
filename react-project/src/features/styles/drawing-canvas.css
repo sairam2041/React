@@ -6,14 +6,10 @@
 }
 
 .drawing-canvas {
-  background-color: #ebe8e5;
+  background-color: #ffffff;
   border: 1px solid #999;
-  box-shadow:
-    inset 0 0 5px #dfa906e1, /* 内側の陰影 */
-    0 0 12px rgba(207, 95, 9, 0.5); /* 外側の立体感 */
-  border-radius: 12px;
+  border-radius: 4px;
   display: block;
-  margin: 0 auto;
   width: 100%;
   height: 100%;
 }
