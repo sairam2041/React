@@ -8,28 +8,35 @@ const DrawingCanvas: React.FC = () => {
     const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null);
     
     useEffect(() => {
-        if(parentRef.current && canvasRef.current) {
-          const canvas = canvasRef.current;
-          const { width, height } = parentRef.current.getBoundingClientRect();
-          const resizeCanvas = () => {
-              canvas.width = width;
-              canvas.height = height;
+        const canvas = canvasRef.current;
+        if (!canvas) return;
 
-              const context = canvas.getContext('2d');
-              if(context) {
-                  context.lineWidth = 2;
-                  context.strokeStyle = '#000';
-                  setCtx(context);
-              }
-          };
+        const resizeCanvas = () => {
+          const parent = canvas.parentElement;
+          if (!parent) return;
 
-          resizeCanvas();
-          window.addEventListener('resize', resizeCanvas);
+          const { width, height } = parent.getBoundingClientRect();
 
-          return () => {
-            window.removeEventListener('resize', resizeCanvas);
-          };
-        }
+          // CSSサイズと描画サイズを一致させる
+          canvas.style.width = `${width}px`;
+          canvas.style.height = `${height}px`;
+          canvas.width = width;
+          canvas.height = height;
+
+          const context = canvas.getContext('2d');
+          if(context) {
+            context.lineWidth = 2;
+            context.strokeStyle = '#000';
+            setCtx(context);
+          }
+        };
+
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        return () => {
+          window.removeEventListener('resize', resizeCanvas);
+        };
     }, []);
 
     const startDrawing = (e: React.MouseEvent<HTMLCanvasElement>) => {
