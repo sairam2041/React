@@ -3,20 +3,32 @@ import '../styles/drawing-canvas.css';
 
 const DrawingCanvas: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
+    const parentRef = useRef<HTMLDivElement | null>(null);
     const [isDrawing, setIsDrawing] = useState<boolean>(false);
     const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null);
     
     useEffect(() => {
-        const canvas = canvasRef.current;
-        if(canvas) {
-            canvas.width = 800;
-            canvas.height = 600;
-            const context = canvas.getContext('2d');
-            if(context) {
-                context.lineWidth = 2;
-                context.strokeStyle = '#000';
-                setCtx(context);
-            }
+        if(parentRef.current && canvasRef.current) {
+          const canvas = canvasRef.current;
+          const { width, height } = parentRef.current.getBoundingClientRect();
+          const resizeCanvas = () => {
+              canvas.width = width;
+              canvas.height = height;
+
+              const context = canvas.getContext('2d');
+              if(context) {
+                  context.lineWidth = 2;
+                  context.strokeStyle = '#000';
+                  setCtx(context);
+              }
+          };
+
+          resizeCanvas();
+          window.addEventListener('resize', resizeCanvas);
+
+          return () => {
+            window.removeEventListener('resize', resizeCanvas);
+          };
         }
     }, []);
 
@@ -47,7 +59,7 @@ const DrawingCanvas: React.FC = () => {
     };
 
   return (
-    <div className="canvas-container">
+    <div ref={parentRef} className="canvas-container">
       <canvas
         ref={canvasRef}
         className="drawing-canvas"
